@@ -1,0 +1,92 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.scores {
+    float: left;
+}
+
+#counter {
+    float: right;
+    color: whitesmoke;
+    
+}
+
+body {
+    background-image: url(./Assets/background.JPG);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+} 
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    max-width: 80%;
+    background-color: rgb(255, 255, 255, 0.9);
+    border-radius: 5px;
+    padding: 10px;
+    clear: both;
+    box-shadow: 0 0 10px 2px;
+}
+
+h1 {
+    align-self: center;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.btn-list {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn {
+    background-color: blue;
+    border: 1px solid rgb(103, 103, 255);
+    width: 200px;
+    font-size: large;
+    color: whitesmoke;
+    padding: 5px 10px;
+    border-radius: 5px;
+    outline: none;
+
+}
+
+.btn:hover {
+    border-color: black;
+    opacity: 0.7;
+}
+
+.btn.correct {
+    background-color: green;
+
+
+}
+
+.btn.wrong {
+    background-color: red;
+
+
+}
+ 
+.start, .next {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.hide {
+    display: none;
+}
