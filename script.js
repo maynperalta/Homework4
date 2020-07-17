@@ -22,6 +22,7 @@ const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 let shuffledQuestions, currentQuestionIndex
 
+var score = 0
 
 
 
@@ -35,18 +36,23 @@ nextButton.addEventListener("click", () => {
 function startQuiz() {
   alert("Welcome to the JavaScript quiz!");
   var name = prompt("What is your name?");
-  if (name === null);{
+  if (name === null){
   alert("I don't know how to address you.")
   return;
   } else {
 
-  alert("Welcome, " + name + ". Let's begin") }
+  alert("Hello, " + name + ". Welcome to my quiz.") 
+  alert("You will be presented with five multiple choice questions regarding JavaScript.")
+  alert("Upon starting the quiz, you will have one minute to answer all of the questions.")
+  alert("Answering a question correctly will grant you one point.")
+  alert("Answering a question incorrectly will award zero points and subtract five seconds off of the timer.")}
 
   startButton.classList.add("hide")
   shuffledQuestions = question.sort(() => Math.random() - .5)
   currentQuestionIndex = 0
   questionContainerElement.classList.remove("hide")
   setNextQuestion()
+  timer()
   
 
     }
@@ -66,6 +72,8 @@ function showQuestion(question) {
     button.classList.add("btn")
     if (answer.correct) {
       button.dataset.correct = answer.correct
+      score ++
+      console.log(score)
     }
     button.addEventListener("click", selectAnswer)
     answerButtonsElement.appendChild(button)
@@ -88,6 +96,11 @@ function selectAnswer(e) {
   })  
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextButton.classList.remove("hide")
+  }else{
+    startButton.innerText = "Retry"
+    startButton.classList.remove("hide")
+
+    alert("That was the final question. The quiz is now over. Your score was: " + score + " Please try again.")
   }
 }
 
@@ -105,34 +118,22 @@ function clearStatusClass(element) {
   element.classList.remove("wrong")
 }
 
+var mins = 1; 
+    var secs = mins * 60;
+    var currentSeconds = 0;
+    var currentMinutes = 0;
+    
+    setTimeout(timer,1000); 
 
-var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+    function timer() {
+        currentMinutes = Math.floor(secs / 60);
+        currentSeconds = secs % 60;
+        if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+        secs--;
+        document.getElementById("counter").innerHTML = currentMinutes + ":" + currentSeconds; 
+        if(secs !== -1) setTimeout('timer()',1000);
+    }
 
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get today's date and time
-  var now = new Date().getTime();
-    
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
-    
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-  // Output the result in an element with id="demo"
-  document.getElementById("counter").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-    
-  // If the count down is over, write some text 
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("counter").innerHTML = "EXPIRED";
-  }
-}, 1000);
 
 const question = [
   {
@@ -178,7 +179,7 @@ const question = [
     question: "What event listener involves a mouse?",
     answers: [
       {text: "Change", correct: false},
-      {text: "Keypress", correct: true},
+      {text: "Keypress", correct: false},
       {text: "Submit", correct: false},
       {text: "Click", correct: true}
     ]
