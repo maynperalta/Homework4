@@ -1,19 +1,19 @@
-//Pseudo-code
-//make an HTML document that will house our container which will have our multiple choice questions and answers.
-//add a button for high scores.
-//add a space for a countdown timer.
-//create a CSS stylesheet in order to style our workspace
-//create a JavaScript file which will have all of our script in order to give feedback on the answers.
-    //feedback will involve whether the answer is right or wrong.
-    //answer will change the question to the next question
-    //right answer will add time to the timer
-    //wrong answer will subtract time from the timer.
-    //when timer reaches zero, quiz is over.
-    //when all questions have been answered, quiz is over.
-    //high score will be logged in local storage.
-    //Alerts if quiz is over, timer runs out, and quiz has begun.
+// Pseudo-code
+// make an HTML document that will house our container which will have our multiple choice questions and answers.
+// add a button for high scores.
+// add a space for a countdown timer.
+// create a CSS stylesheet in order to style our workspace
+// create a JavaScript file which will have all of our script in order to give feedback on the answers.
+//     feedback will involve whether the answer is right or wrong.
+//     answer will change the question to the next question
+//     right answer will add time to the timer
+//     wrong answer will subtract time from the timer.
+//     when timer reaches zero, quiz is over.
+//     when all questions have been answered, quiz is over.
+//     high score will be logged in local storage.
+//     Alerts if quiz is over, timer runs out, and quiz has begun.
 
-    //additional research was done from watching the video "Build A Quiz App With JavaScript" from the channel "Web Dev Simplified"
+//     additional research was done from watching the video "Build A Quiz App With JavaScript" from the channel "Web Dev Simplified"
 
 const startButton = document.getElementById("start");
 const nextButton = document.getElementById("next");
@@ -33,15 +33,22 @@ nextButton.addEventListener("click", () => {
 
 
 function startQuiz() {
-  alert("Welcome to the JavaScript quiz!")
+  alert("Welcome to the JavaScript quiz!");
+  var name = prompt("What is your name?");
+  if (name === null);{
+  alert("I don't know how to address you.")
+  return;
+  } else {
+
+  alert("Welcome, " + name + ". Let's begin") }
 
   startButton.classList.add("hide")
   shuffledQuestions = question.sort(() => Math.random() - .5)
   currentQuestionIndex = 0
   questionContainerElement.classList.remove("hide")
   setNextQuestion()
-
   
+
     }
 
 
@@ -141,9 +148,9 @@ const question = [
   {
     question: "What is needed for a function to operate?",
     answers: [
-      {text: "Call", correct: true},
-      {text: "Permission", correct: false},
       {text: "Fuel", correct: false},
+      {text: "Permission", correct: false},
+      {text: "Call", correct: true},
       {text: "Button", correct: false}
     ]
   },
@@ -154,6 +161,26 @@ const question = [
       {text: "Concat", correct: true},
       {text: "Add", correct: false},
       {text: "Combine", correct: false}
+    ]
+  },
+
+  {
+    question: "What tag would designate JavaScript data?",
+    answers: [
+      {text: "Head", correct: false},
+      {text: "Style", correct: false},
+      {text: "Script", correct: true},
+      {text: "Meta", correct: false}
+    ]
+  },
+
+  {
+    question: "What event listener involves a mouse?",
+    answers: [
+      {text: "Change", correct: false},
+      {text: "Keypress", correct: true},
+      {text: "Submit", correct: false},
+      {text: "Click", correct: true}
     ]
   },
 ]
