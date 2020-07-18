@@ -37,7 +37,7 @@ function startQuiz() {
   alert("Welcome to the JavaScript quiz!");
   var name = prompt("What is your name?");
   if (name === null){
-  alert("I don't know how to address you.")
+  alert("All right then, keep your secrets.")
   return;
   } else {
 
@@ -70,15 +70,16 @@ function showQuestion(question) {
     const button = document.createElement("button")
     button.innerText = answer.text
     button.classList.add("btn")
-    if (answer.correct) {
       button.dataset.correct = answer.correct
-      score ++
-      console.log(score)
-    }
     button.addEventListener("click", selectAnswer)
     answerButtonsElement.appendChild(button)
   })
 }
+
+function checkAnswer(event) {
+  console.log(event)
+}
+
 function resetState(){
   clearStatusClass(document.body)
   nextButton.classList.add("hide")
@@ -139,11 +140,12 @@ const question = [
   {
     question: "What does the abbreviate 'var' stand for?",
     answers: [
-      { text: "Variable", correct: true },
-      { text: "Variety", correct: false },
-      { text: "Various", correct: false },
-      { text: "Varsity", correct: false }
-    ]
+      {text: "Variable", correct: true},
+      {text: "Variety", correct: false},
+      {text: "Various", correct: false},
+      {text: "Varsity", correct: false}
+    ], 
+    correctAnswer: 0
 
   },
   {
@@ -153,7 +155,8 @@ const question = [
       {text: "Permission", correct: false},
       {text: "Call", correct: true},
       {text: "Button", correct: false}
-    ]
+    ],
+    correctAnswer: 2
   },
   {
     question: "How do I add to an array?",
@@ -162,7 +165,8 @@ const question = [
       {text: "Concat", correct: true},
       {text: "Add", correct: false},
       {text: "Combine", correct: false}
-    ]
+    ],
+    correctAnswer: 1
   },
 
   {
@@ -172,7 +176,8 @@ const question = [
       {text: "Style", correct: false},
       {text: "Script", correct: true},
       {text: "Meta", correct: false}
-    ]
+    ],
+    correctAnswer: 2
   },
 
   {
@@ -182,6 +187,7 @@ const question = [
       {text: "Keypress", correct: false},
       {text: "Submit", correct: false},
       {text: "Click", correct: true}
-    ]
+    ],
+    correctAnswer: 3
   },
 ]
