@@ -7,7 +7,7 @@
     <title>JavaScript Quiz</title>
 </head>
 <body>
-    <button id="scores">High Scores</button>
+    <button id="top">High Scores</button>
     <div id="counter"></div>
     
     <div class="container">
@@ -20,6 +20,20 @@
     <div class="controls">
         <button id="start" class="start btn">Start</button>
         <button id="next" class="next btn hide">Next</button>
+    </div>
+    <div class="track hide">
+        <form method = "POST">
+            <div class="input-group">
+                <label for="initials">Please, enter your initials!</label>
+                <input type="text" name="initials" id="initials" placeholder="Initial Here"/>
+            </div>
+            <div id="msg"></div>
+            <button id="record">Submit</button>
+        </form>
+    </div>
+    <div class="scores hide">
+        <h1>High Scores</h1>
+        <p><span id = "user-initials"></span></p>
     </div>
     </div>
    
