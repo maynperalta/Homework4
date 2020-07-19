@@ -20,6 +20,7 @@ const nextButton = document.getElementById("next");
 const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
+const button = document.querySelector("button");
 let shuffledQuestions, currentQuestionIndex
 
 var answerBoolean 
@@ -83,7 +84,7 @@ function checkAnswer(event) {
 }
 
 function resetState(){
-  clearStatusClass(document.body)
+  // clearStatusClass(document.body)
   nextButton.classList.add("hide")
   while (answerButtonsElement.firstChild){
     answerButtonsElement.removeChild(answerButtonsElement.firstChild)
@@ -105,53 +106,69 @@ function selectAnswer(e, answerBoolean) {
     startButton.innerText = "Retry"
     startButton.classList.remove("hide")
 
-    alert("That was the final question. The quiz is now over. Your score was: " + score + " Please try again.")
+    alert("The quiz is complete. Your score is: " + score + ". Please try again.")
   }
 }
 
 function setStatusClass(element, answerBoolean) {
   console.log("------------------------------------");
-  clearStatusClass(element)
+  // clearStatusClass(element)
   console.log(answerBoolean)
   console.log(typeof answerBoolean)
+  document.getElementById('answer-buttons').innerHTML = "";
   if (answerBoolean == 'true') {
     console.log("If accessed")
-    element.classList.add("correct")
+    // element.classList.add("correct")
+    document.getElementById('question').innerHTML = "Correct!"
     alert("That is correct!")
     score++
     console.log(score)
   } else {
-    element.classList.add("wrong")
+    // element.classList.add("wrong")
+    document.getElementById('question').innerHTML = "Incorrect."
     alert("I'm sorry. That is incorrect.")
     console.log(score)
   }
 }
 
-function clearStatusClass(element) {
-  element.classList.remove("correct")
-  element.classList.remove("wrong")
-}
+// function clearStatusClass(element) {
+//   element.classList.remove("correct")
+//   element.classList.remove("wrong")
+// }
 
-var mins = 1; 
-    var secs = mins * 60;
-    var currentSeconds = 0;
-    var currentMinutes = 0;
+// var timeEl = document.querySelector(".counter");
+// var secondsLeft = 60;
+//   function timer(){
+//     var timerInterval = setInterval(function() {
+//       secondsLeft--;
+//       timeEl.innerHTML = secondsLeft;
+//       if(secondsLeft === 0){
+//         clearInterval(timerInterval);
+//         alert("I'm sorry. Time is up. Please try again.")
+//       }
+//     }, 1000);
+//   }
+
+// var mins = 1; 
+//     var secs = mins * 60;
+//     var currentSeconds = 0;
+//     var currentMinutes = 0;
     
-    setTimeout(timer,1000); 
+//     setTimeout(timer,1000); 
 
-    function timer() {
-        currentMinutes = Math.floor(secs / 60);
-        currentSeconds = secs % 60;
-        if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
-        secs--;
-        document.getElementById("counter").innerHTML = currentMinutes + ":" + currentSeconds; 
-        if(secs !== -1) setTimeout('timer()',1000);
-    }
+//     function timer() {
+//         currentMinutes = Math.floor(secs / 60);
+//         currentSeconds = secs % 60;
+//         if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+//         secs--;
+//         document.getElementById("counter").innerHTML = currentMinutes + ":" + currentSeconds; 
+//         if(secs !== -1) setTimeout('timer()',1000);
+//     }
 
 
 const question = [
   {
-    question: "What does the abbreviate 'var' stand for?",
+    question: "What does the abbreviation 'var' stand for?",
     answers: [
       {text: "Variable", correct: true},
       {text: "Variety", correct: false},
@@ -162,7 +179,7 @@ const question = [
 
   },
   {
-    question: "What is needed for a function to operate?",
+    question: "What is needed in order for a function to operate?",
     answers: [
       {text: "Fuel", correct: false},
       {text: "Permission", correct: false},
