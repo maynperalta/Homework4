@@ -20,45 +20,45 @@ const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 const button = document.querySelector("button");
-const hiScore = socument.querySelector("#scores");
+// const hiScore = socument.querySelector("#scores");
 let shuffledQuestions, currentQuestionIndex
-var recordButton = document.getElementById("record");
-var msgDiv = document.querySelector("#msg");
-var initialInput = document.querySelector("#initials");
-var initialInputSpan = document.getElementById("#user-initials");
+// var recordButton = document.getElementById("record");
+// var msgDiv = document.querySelector("#msg");
+// var initialInput = document.querySelector("#initials");
+// var initialInputSpan = document.getElementById("#user-initials");
 var score = 0
 
-function displayMessage(type, message){
-  msgDiv.textContent = message;
-  msgDiv.setAttribute("class", type);
-}
+// function displayMessage(type, message){
+//   msgDiv.textContent = message;
+//   msgDiv.setAttribute("class", type);
+// }
 
-recordButton.addEventListener("click",function(event){
-  event.preventDefault();
+// recordButton.addEventListener("click",function(event){
+//   event.preventDefault();
 
-  var user = {initial: initialInput.value.trim()};
+//   var user = {initial: initialInput.value.trim()};
   
-  if (user.initial ===""){
-    displayMessage("error", "Please enter your initals");
-  }else{
-    displayMessage("Success!", "Score added.");
+//   if (user.initial ===""){
+//     displayMessage("error", "Please enter your initals");
+//   }else{
+//     displayMessage("Success!", "Score added.");
   
-    console.log(user);
-    localStorage.setItem("user", user);
+//     console.log(user);
+//     localStorage.setItem("user", user);
 
-    var lastUser = localStorage.getItem("user");
-      initialInputSpan.textContent = lastUser.initial;
-  }  
-});
-
-
-hiScore.addEventListener("click", showScores)
-
-function showScores(){
-  
+//     var lastUser = localStorage.getItem("user");
+//       initialInputSpan.textContent = lastUser.initial;
+//   }  
+// });
 
 
-}
+// hiScore.addEventListener("click", showScores)
+
+// function showScores(){
+
+
+
+// }
 
 startButton.addEventListener("click", startQuiz)
 nextButton.addEventListener("click", () => {
