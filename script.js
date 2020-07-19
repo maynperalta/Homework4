@@ -35,6 +35,7 @@ nextButton.addEventListener("click", () => {
 
 
 function startQuiz() {
+  score = 0
   alert("Welcome to the JavaScript quiz!");
   var name = prompt("What is your name?");
   if (name === null){
@@ -94,12 +95,11 @@ function selectAnswer(e, answerBoolean) {
   const selectedButton = e.target
   const correct = selectedButton.dataset.correct
   setStatusClass(document.body, correct)
-  Array.from(answerButtonsElement.children).forEach(button => {
-    setStatusClass(button, button.dataset.correct)
-  })  
+  // Array.from(answerButtonsElement.children).forEach(button => {
+    // setStatusClass(button, button.dataset.correct)
+  // })  
   answerBoolean = selectedButton.dataset.correct
-  console.log(answerBoolean)
-  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+  if (shuffledQuestions.length > currentQuestionIndex +1) {
     nextButton.classList.remove("hide")
   }else{
     startButton.innerText = "Retry"
@@ -110,14 +110,20 @@ function selectAnswer(e, answerBoolean) {
 }
 
 function setStatusClass(element, answerBoolean) {
+  console.log("------------------------------------");
   clearStatusClass(element)
-  if (answerBoolean == "true") {
+  console.log(answerBoolean)
+  console.log(typeof answerBoolean)
+  if (answerBoolean == 'true') {
     console.log("If accessed")
     element.classList.add("correct")
     alert("That is correct!")
+    score++
+    console.log(score)
   } else {
     element.classList.add("wrong")
     alert("I'm sorry. That is incorrect.")
+    console.log(score)
   }
 }
 

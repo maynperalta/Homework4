@@ -26,6 +26,12 @@ body {
     background-position: center;
 } 
 
+#question {
+    font-size: 36px;
+    font-weight: Bold;
+
+}
+
 .container {
     margin-left: auto;
     margin-right: auto;
