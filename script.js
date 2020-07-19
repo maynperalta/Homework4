@@ -21,12 +21,16 @@ const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 const button = document.querySelector("button");
+// const hiScore = getElementById("scores")
 let shuffledQuestions, currentQuestionIndex
-
 var answerBoolean 
 var score = 0
 
+// hiScore.addEventListener("click", showScores)
 
+// function showScores(){
+
+// }
 
 startButton.addEventListener("click", startQuiz)
 nextButton.addEventListener("click", () => {
@@ -37,8 +41,7 @@ nextButton.addEventListener("click", () => {
 
 function startQuiz() {
   score = 0
-  alert("Welcome to the JavaScript quiz!");
-  var name = prompt("What is your name?");
+  var name = prompt("Welcome to the JavaScript quiz! What is your name?");
   if (name === null){
   alert("All right then, keep your secrets.")
   return;
@@ -48,7 +51,9 @@ function startQuiz() {
   alert("You will be presented with five multiple choice questions regarding JavaScript.")
   alert("Upon starting the quiz, you will have one minute to answer all of the questions.")
   alert("Answering a question correctly will grant you one point.")
-  alert("Answering a question incorrectly will award zero points and subtract five seconds off of the timer.")}
+  alert("Answering a question incorrectly will award zero points AND subtract five seconds off of the timer.")
+  alert("If you manage to answer all 5 questions in the allotted time, your score will be multiplied by the time remaining in order to calculate your final score.")
+  alert("Are you ready? Here we go!")}
 
   startButton.classList.add("hide")
   shuffledQuestions = question.sort(() => Math.random() - .5)
@@ -56,8 +61,6 @@ function startQuiz() {
   questionContainerElement.classList.remove("hide")
   setNextQuestion()
   timer()
-  
-
     }
 
 
@@ -84,7 +87,6 @@ function checkAnswer(event) {
 }
 
 function resetState(){
-  // clearStatusClass(document.body)
   nextButton.classList.add("hide")
   while (answerButtonsElement.firstChild){
     answerButtonsElement.removeChild(answerButtonsElement.firstChild)
@@ -96,9 +98,6 @@ function selectAnswer(e, answerBoolean) {
   const selectedButton = e.target
   const correct = selectedButton.dataset.correct
   setStatusClass(document.body, correct)
-  // Array.from(answerButtonsElement.children).forEach(button => {
-    // setStatusClass(button, button.dataset.correct)
-  // })  
   answerBoolean = selectedButton.dataset.correct
   if (shuffledQuestions.length > currentQuestionIndex +1) {
     nextButton.classList.remove("hide")
@@ -106,64 +105,38 @@ function selectAnswer(e, answerBoolean) {
     startButton.innerText = "Retry"
     startButton.classList.remove("hide")
 
-    alert("The quiz is complete. Your score is: " + score + ". Please try again.")
+    alert("The quiz is complete. Your final score is: " + score + ". Please enter your initials to keep track of your score!")
   }
 }
 
 function setStatusClass(element, answerBoolean) {
   console.log("------------------------------------");
-  // clearStatusClass(element)
   console.log(answerBoolean)
-  console.log(typeof answerBoolean)
   document.getElementById('answer-buttons').innerHTML = "";
   if (answerBoolean == 'true') {
-    console.log("If accessed")
-    // element.classList.add("correct")
     document.getElementById('question').innerHTML = "Correct!"
     alert("That is correct!")
     score++
     console.log(score)
   } else {
-    // element.classList.add("wrong")
     document.getElementById('question').innerHTML = "Incorrect."
     alert("I'm sorry. That is incorrect.")
     console.log(score)
   }
 }
 
-// function clearStatusClass(element) {
-//   element.classList.remove("correct")
-//   element.classList.remove("wrong")
-// }
-
-// var timeEl = document.querySelector(".counter");
-// var secondsLeft = 60;
-//   function timer(){
-//     var timerInterval = setInterval(function() {
-//       secondsLeft--;
-//       timeEl.innerHTML = secondsLeft;
-//       if(secondsLeft === 0){
-//         clearInterval(timerInterval);
-//         alert("I'm sorry. Time is up. Please try again.")
-//       }
-//     }, 1000);
-//   }
-
-// var mins = 1; 
-//     var secs = mins * 60;
-//     var currentSeconds = 0;
-//     var currentMinutes = 0;
-    
-//     setTimeout(timer,1000); 
-
-//     function timer() {
-//         currentMinutes = Math.floor(secs / 60);
-//         currentSeconds = secs % 60;
-//         if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
-//         secs--;
-//         document.getElementById("counter").innerHTML = currentMinutes + ":" + currentSeconds; 
-//         if(secs !== -1) setTimeout('timer()',1000);
-//     }
+var timeEl = document.querySelector(".counter");
+var secondsLeft = 60;
+  function timer(){
+    var timerInterval = setInterval(function() {
+      secondsLeft--;
+      timeEl.innerHTML = secondsLeft;
+      if(secondsLeft === 0){
+        clearInterval(timerInterval);
+        alert("I'm sorry. Time is up. Please try again.")
+      }
+    }, 1000);
+  }
 
 
 const question = [
