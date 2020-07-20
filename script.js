@@ -22,6 +22,8 @@ const answerButtonsElement = document.getElementById("answer-buttons");
 const button = document.querySelector("button");
 const formEl = document.getElementById("form");
 const hiScore = document.querySelector(".scores");
+const topEl = document.getElementById("top");
+const returnEl = document.getElementById("return");
 let shuffledQuestions, currentQuestionIndex;
 var recordButton = document.getElementById("record");
 var msgDiv = document.getElementById("msg");
@@ -58,6 +60,10 @@ recordButton.addEventListener("click",function(event){
   }
 });
 
+returnEl.addEventListener("click", function() {
+  location.reload();
+})
+
 //show form and store high scores pseudocode
 //show entry form once quiz is completed
 //save entry to local storage upon click of submit button
@@ -68,12 +74,10 @@ function showForm () {
 }
 
 
-hiScore.addEventListener("click", showScores)
-
-function showScores(){
+topEl.addEventListener("click", function(){
   questionContainerElement.classList.add("hide");
   hiScore.classList.remove("hide");
-}
+})
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", () => {
@@ -100,6 +104,7 @@ function startQuiz() {
   shuffledQuestions = question.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   questionContainerElement.classList.remove("hide");
+  hiScore.classList.add("hide");
   setNextQuestion();
   timer();
 
