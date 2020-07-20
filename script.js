@@ -32,33 +32,14 @@ var initialInputSpan = document.getElementById("user-initials");
 var score = 0;
 var timerInterval;
 var secondsLeft = 60;
+var highScores = [];
+
+// function displayMessage(type, message){
+//   msgDiv.textContent = message;
+//   msgDiv.setAttribute("class", type);
+// }
 
 
-function displayMessage(type, message){
-  msgDiv.textContent = message;
-  msgDiv.setAttribute("class", type);
-}
-
-recordButton.addEventListener("click",function(event){
-  event.preventDefault();
-
- var temp_data = JSON.parse(localStorage.getItem("user")) || [];
-
-  var user = {initial: initialInput.value.trim()};
-  temp_data.push(user);
-
-  if (user.initialInput ===""){
-    displayMessage("error", "Please enter your initals");
-  }else{
-    displayMessage("Success! Your score has been added!");
-
-    console.log(user);
-    localStorage.setItem("user", JSON.stringify(temp_data), score);
-
-  //  var lastUser = localStorage.getItem("user");
-      initialInputSpan.textContent = temp_data.initial;
-  }
-});
 
 returnEl.addEventListener("click", function() {
   location.reload();
@@ -155,11 +136,32 @@ function selectAnswer(e) {
     nextButton.classList.remove("hide");
   } else {
     var final = score * secondsLeft;
-    // call function to show form and store high score. 
     showForm();
     // startButton.innerText = "Retry";
     // startButton.classList.remove("hide");
     clearInterval(timerInterval);
+    recordButton.addEventListener("click",function(event){
+      event.preventDefault();
+    
+     var temp_data = JSON.parse(localStorage.getItem("user")) || [];
+      console.log(temp_data);
+      var user = {initial: initialInput.value, score: final};
+      // temp_data.push(user);
+      highScores.push(user);
+    
+      // if (user.initialInput ===""){
+      //   displayMessage("error", "Please enter your initals");
+      // }else{
+      //   displayMessage("Success! Your score has been added!");
+    
+        console.log(user);
+        localStorage.setItem("user", JSON.stringify(user));
+    
+       var lastUser = JSON.parse(localStorage.getItem("user"));
+       console.log(lastUser);
+          initialInputSpan.innerHTML = lastUser;
+      }
+    });
     alert("The quiz is complete. Your final score is: " + final + ". Please enter your initials to keep track of your score!");
   }
 }
