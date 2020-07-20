@@ -21,10 +21,10 @@ const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 const button = document.querySelector("button");
 const formEl = document.getElementById("form");
-const hiScore = document.querySelector("#scores");
+const hiScore = document.querySelector(".scores");
 let shuffledQuestions, currentQuestionIndex;
 var recordButton = document.getElementById("record");
-var msgDiv = document.querySelector("#msg");
+var msgDiv = document.getElementById("msg");
 var initialInput = document.getElementById("initials");
 var initialInputSpan = document.getElementById("user-initials");
 var score = 0;
@@ -68,12 +68,12 @@ function showForm () {
 }
 
 
-hiScore.addEventListener("click", showScores);{
+hiScore.addEventListener("click", showScores)
 
 function showScores(){
   questionContainerElement.classList.add("hide");
   hiScore.classList.remove("hide");
-}}
+}
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", () => {
