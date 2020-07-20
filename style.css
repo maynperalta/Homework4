@@ -98,3 +98,12 @@ h1 {
     font-weight: bolder;
     text-align: center;
 }
+
+#record {
+    padding: 10px;
+}
+
+input {
+    padding: 5px;
+    margin: 5px;
+}

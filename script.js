@@ -20,173 +20,208 @@ const questionContainerElement = document.getElementById("question-container");
 const questionElement = document.getElementById("question");
 const answerButtonsElement = document.getElementById("answer-buttons");
 const button = document.querySelector("button");
-// const hiScore = socument.querySelector("#scores");
-let shuffledQuestions, currentQuestionIndex
-// var recordButton = document.getElementById("record");
-// var msgDiv = document.querySelector("#msg");
-// var initialInput = document.querySelector("#initials");
-// var initialInputSpan = document.getElementById("#user-initials");
-var score = 0
-
-// function displayMessage(type, message){
-//   msgDiv.textContent = message;
-//   msgDiv.setAttribute("class", type);
-// }
-
-// recordButton.addEventListener("click",function(event){
-//   event.preventDefault();
-
-//   var user = {initial: initialInput.value.trim()};
-  
-//   if (user.initial ===""){
-//     displayMessage("error", "Please enter your initals");
-//   }else{
-//     displayMessage("Success!", "Score added.");
-  
-//     console.log(user);
-//     localStorage.setItem("user", user);
-
-//     var lastUser = localStorage.getItem("user");
-//       initialInputSpan.textContent = lastUser.initial;
-//   }  
-// });
+const formEl = document.getElementById("form");
+const hiScore = document.querySelector("#scores");
+let shuffledQuestions, currentQuestionIndex;
+var recordButton = document.getElementById("record");
+var msgDiv = document.querySelector("#msg");
+var initialInput = document.getElementById("initials");
+var initialInputSpan = document.getElementById("user-initials");
+var score = 0;
+var timerInterval;
+var secondsLeft = 60;
 
 
-// hiScore.addEventListener("click", showScores)
+function displayMessage(type, message){
+  msgDiv.textContent = message;
+  msgDiv.setAttribute("class", type);
+}
 
-// function showScores(){
+recordButton.addEventListener("click",function(event){
+  event.preventDefault();
+
+ var temp_data = JSON.parse(localStorage.getItem("user")) || [];
+
+  var user = {initial: initialInput.value.trim()};
+  temp_data.push(user);
+
+  if (user.initialInput ===""){
+    displayMessage("error", "Please enter your initals");
+  }else{
+    displayMessage("Success! Your score has been added!");
+
+    console.log(user);
+    localStorage.setItem("user", JSON.stringify(temp_data), score);
+
+  //  var lastUser = localStorage.getItem("user");
+      initialInputSpan.textContent = temp_data.initial;
+  }
+});
+
+//show form and store high scores pseudocode
+//show entry form once quiz is completed
+//save entry to local storage upon click of submit button
+//show retry button and hide form.
+
+function showForm () {
+  formEl.classList.remove("hide");
+}
 
 
+hiScore.addEventListener("click", showScores);{
 
-// }
+function showScores(){
+  questionContainerElement.classList.add("hide");
+  hiScore.classList.remove("hide");
+}}
 
-startButton.addEventListener("click", startQuiz)
+startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", () => {
-  currentQuestionIndex++
-  setNextQuestion()
-})
+  currentQuestionIndex++;
+  setNextQuestion();
+});
 
 function startQuiz() {
-  score = 0
+  score = 0;
+  secondsLeft = 60;
   var name = prompt("Welcome to the JavaScript quiz! What is your name?");
-  if (name === null){
-  alert("All right then, keep your secrets.")
-  return;
+  if (name === null) {
+    alert("All right then, keep your secrets.");
+    return;
   } else {
+    alert("Hello, " + name + ". Welcome to my quiz.");
+    alert("You will be presented with five multiple choice questions regarding JavaScript. Upon starting the quiz, you will have one minute to answer all of the questions.");
+    alert("Answering a question correctly will grant you one point. However, answering a question incorrectly will award zero points AND subtract five seconds off of the timer.");
+    alert("If you manage to answer all 5 questions in the allotted time, your score will be multiplied by the time remaining in order to calculate your final score.");
+    alert("Are you ready? Here we go!");
+  }
 
-  alert("Hello, " + name + ". Welcome to my quiz.") 
-  alert("You will be presented with five multiple choice questions regarding JavaScript. Upon starting the quiz, you will have one minute to answer all of the questions.")
-  alert("Answering a question correctly will grant you one point. However, answering a question incorrectly will award zero points AND subtract five seconds off of the timer.")
-  alert("If you manage to answer all 5 questions in the allotted time, your score will be multiplied by the time remaining in order to calculate your final score.")
-  alert("Are you ready? Here we go!")}
+  startButton.classList.add("hide");
+  shuffledQuestions = question.sort(() => Math.random() - 0.5);
+  currentQuestionIndex = 0;
+  questionContainerElement.classList.remove("hide");
+  setNextQuestion();
+  timer();
 
-  startButton.classList.add("hide")
-  shuffledQuestions = question.sort(() => Math.random() - .5)
-  currentQuestionIndex = 0
-  questionContainerElement.classList.remove("hide")
-  setNextQuestion()
-  timer()
-   
   var timeEl = document.getElementById("counter");
-  var secondsLeft = 60;
-    function timer(){
-      var timerInterval = setInterval(function() {
-        secondsLeft--;
-        timeEl.innerHTML = secondsLeft;
-        if(secondsLeft === 0){
-          clearInterval(timerInterval);
-          alert("I'm sorry. Time is up. Please try again.")
-          return;
-        }}, 1000);}
+  function timer() {
+    timerInterval = setInterval(function () {
+      secondsLeft--;
+      timeEl.innerHTML = secondsLeft;
+      if (secondsLeft <= 0) {
+        clearInterval(timerInterval);
+        alert("I'm sorry. Time is up. Please try again.");
+        location.reload();
+      }
+    }, 1000);
+  }
 }
 
 function setNextQuestion() {
-  resetState()
-  showQuestion(shuffledQuestions[currentQuestionIndex])
+  resetState();
+  showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
 function showQuestion(question) {
-  questionElement.innerText = question.question
-  question.answers.forEach(answer => {
-    const button = document.createElement("button")
-    button.innerText = answer.text
-    button.classList.add("btn")
-      button.dataset.correct = answer.correct
-    button.addEventListener("click", selectAnswer)
-    answerButtonsElement.appendChild(button)
-  })}
+  questionElement.innerText = question.question;
+  question.answers.forEach((answer) => {
+    const button = document.createElement("button");
+    button.innerText = answer.text;
+    button.classList.add("btn");
+    button.dataset.correct = answer.correct;
+    button.addEventListener("click", selectAnswer);
+    answerButtonsElement.appendChild(button);
+  });
+}
 
-function resetState(){
-  nextButton.classList.add("hide")
-  while (answerButtonsElement.firstChild){
-    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
-  }}
+function resetState() {
+  nextButton.classList.add("hide");
+  while (answerButtonsElement.firstChild) {
+    answerButtonsElement.removeChild(answerButtonsElement.firstChild);
+  }
+}
 
-function selectAnswer(e, answerBoolean) {
-  const selectedButton = e.target
-  const correct = selectedButton.dataset.correct
-  setStatusClass(document.body, correct)
-  answerBoolean = selectedButton.dataset.correct
-  if (shuffledQuestions.length > currentQuestionIndex +1) {
-    nextButton.classList.remove("hide")
-  }else{
-    startButton.innerText = "Retry"
-    startButton.classList.remove("hide")
-    alert("The quiz is complete. Your final score is: " + score + ". Please enter your initials to keep track of your score!")
-
-  }}
-
-function setStatusClass(event, answerBoolean) {
-  console.log("------------------------------------");
-  console.log(answerBoolean)
-  document.getElementById('answer-buttons').innerHTML = "";
-  if (answerBoolean == 'true') {
-    document.getElementById('question').innerHTML = "Correct!"
-    alert("That is correct!")
-    score++
-    console.log(score)
+function selectAnswer(e) {
+  const selectedButton = e.target;
+  const correct = selectedButton.dataset.correct;
+  setStatusClass(correct);
+  answerBoolean = selectedButton.dataset.correct;
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove("hide");
   } else {
-    document.getElementById('question').innerHTML = "Incorrect."
-    alert("I'm sorry. That is incorrect.")
-    console.log(score)
-  }}
+    var final = score * secondsLeft;
+    // call function to show form and store high score. 
+    showForm();
+    // startButton.innerText = "Retry";
+    // startButton.classList.remove("hide");
+    clearInterval(timerInterval);
+    alert("The quiz is complete. Your final score is: " + final + ". Please enter your initials to keep track of your score!");
+  }
+}
 
-const question = [{question: "What does the abbreviation 'var' stand for?",
-    answers: [
-      {text: "Variable", correct: true},
-      {text: "Variety", correct: false},
-      {text: "Various", correct: false},
-      {text: "Varsity", correct: false}
-    ],},
+function setStatusClass(answerBoolean) {
+  console.log("------------------------------------");
+  console.log(answerBoolean);
+  document.getElementById("answer-buttons").innerHTML = "";
+  if (answerBoolean == "true") {
+    document.getElementById("question").innerHTML = "Correct!";
+    score++;
+    console.log(score);
+  } else {
+    document.getElementById("question").innerHTML = "Incorrect.";
+    console.log(score);
+    secondsLeft -= 5;
+  }
+}
 
-  {question: "What is needed in order for a function to operate?",
+const question = [
+  {
+    question: "What does the abbreviation 'var' stand for?",
     answers: [
-      {text: "Fuel", correct: false},
-      {text: "Permission", correct: false},
-      {text: "Call", correct: true},
-      {text: "Button", correct: false}
-    ],},
+      { text: "Variable", correct: true },
+      { text: "Variety", correct: false },
+      { text: "Various", correct: false },
+      { text: "Varsity", correct: false },
+    ],
+  },
 
-  {question: "How do I add to an array?",
+  {
+    question: "What is needed in order for a function to operate?",
     answers: [
-      {text: "Push", correct: false},
-      {text: "Concat", correct: true},
-      {text: "Add", correct: false},
-      {text: "Combine", correct: false}
-    ],},
+      { text: "Fuel", correct: false },
+      { text: "Permission", correct: false },
+      { text: "Call", correct: true },
+      { text: "Button", correct: false },
+    ],
+  },
 
-  {question: "What tag would designate JavaScript data?",
+  {
+    question: "How do I add to an array?",
     answers: [
-      {text: "Head", correct: false},
-      {text: "Style", correct: false},
-      {text: "Script", correct: true},
-      {text: "Meta", correct: false}
-    ],},
+      { text: "Push", correct: false },
+      { text: "Concat", correct: true },
+      { text: "Add", correct: false },
+      { text: "Combine", correct: false },
+    ],
+  },
 
-  {question: "What event listener involves a mouse?",
+  {
+    question: "What tag would designate JavaScript data?",
     answers: [
-      {text: "Change", correct: false},
-      {text: "Keypress", correct: false},
-      {text: "Submit", correct: false},
-      {text: "Click", correct: true}
-    ],},]
+      { text: "Head", correct: false },
+      { text: "Style", correct: false },
+      { text: "Script", correct: true },
+      { text: "Meta", correct: false },
+    ],
+  },
+
+  {
+    question: "What event listener involves a mouse?",
+    answers: [
+      { text: "Change", correct: false },
+      { text: "Keypress", correct: false },
+      { text: "Submit", correct: false },
+      { text: "Click", correct: true },
+    ],
+  },
+];
