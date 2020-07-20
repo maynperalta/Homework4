@@ -1,18 +1,4 @@
-// Pseudo-code
-// make an HTML document that will house our container which will have our multiple choice questions and answers.
-// add a button for high scores.
-// add a space for a countdown timer.
-// create a CSS stylesheet in order to style our workspace
-// create a JavaScript file which will have all of our script in order to give feedback on the answers.
-//     feedback will involve whether the answer is right or wrong.
-//     answer will change the question to the next question
-//     wrong answer will subtract time from the timer.
-//     when timer reaches zero, quiz is over.
-//     when all questions have been answered, quiz is over.
-//     high score will be logged in local storage.
-//     Alerts if quiz is over, timer runs out, and quiz has begun.
-
-//     additional research was done from watching the video "Build A Quiz App With JavaScript" from the channel "Web Dev Simplified"
+// Here are my constants and variables that will be needed for the assignment. 
 
 const startButton = document.getElementById("start");
 const nextButton = document.getElementById("next");
@@ -23,42 +9,43 @@ const button = document.querySelector("button");
 const formEl = document.getElementById("form");
 const hiScore = document.querySelector(".scores");
 const topEl = document.getElementById("top");
+const retryEl = document.getElementById("retry");
 const returnEl = document.getElementById("return");
 let shuffledQuestions, currentQuestionIndex;
 var recordButton = document.getElementById("record");
 var msgDiv = document.getElementById("msg");
 var initialInput = document.getElementById("initials");
 var initialInputSpan = document.getElementById("user-initials");
+var recentEL = document.getElementById("recent");
 var score = 0;
 var timerInterval;
 var secondsLeft = 60;
 var highScores = [];
 
-// function displayMessage(type, message){
-//   msgDiv.textContent = message;
-//   msgDiv.setAttribute("class", type);
-// }
 
-
+//This function is in reference to a return button in the High Score page. Clicking this button will refresh the page. 
 
 returnEl.addEventListener("click", function() {
   location.reload();
 })
 
-//show form and store high scores pseudocode
-//show entry form once quiz is completed
-//save entry to local storage upon click of submit button
-//show retry button and hide form.
-
+//This function shows the initial input form which is then saved to local storage. There's also a retry button which will reset the page to try again.
 function showForm () {
   formEl.classList.remove("hide");
 }
 
+retryEl.addEventListener("click", function(){
+  location.reload();
+})
+
+//This event listener will show the high scores once the button is clicked it does so by hiding eveything else on the page then showing the high score list. 
 
 topEl.addEventListener("click", function(){
   questionContainerElement.classList.add("hide");
   hiScore.classList.remove("hide");
 })
+
+//This event listener starts the quiz. It will initiate the startQuiz function and bring up the first question.
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", () => {
@@ -66,11 +53,13 @@ nextButton.addEventListener("click", () => {
   setNextQuestion();
 });
 
+
+//This is the startQuiz function. Here is a series of alerts that will lay out the rules of the quiz. After the alerts have finished, the quiz will begin and the timer will start.
 function startQuiz() {
   score = 0;
   secondsLeft = 60;
   var name = prompt("Welcome to the JavaScript quiz! What is your name?");
-  if (name === null) {
+  if (name === null || name === "") {
     alert("All right then, keep your secrets.");
     return;
   } else {
@@ -81,6 +70,8 @@ function startQuiz() {
     alert("Are you ready? Here we go!");
   }
 
+//The questions are presented in a random order as seen by this code here. This is also where the call for the timer function and the call for the setNextQuestion functions are.
+
   startButton.classList.add("hide");
   shuffledQuestions = question.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
@@ -88,6 +79,8 @@ function startQuiz() {
   hiScore.classList.add("hide");
   setNextQuestion();
   timer();
+
+//This is a 60 second timer which starts counting down once the quiz begins. If time expires, the quiz is over and the page resets.
 
   var timeEl = document.getElementById("counter");
   function timer() {
@@ -102,6 +95,8 @@ function startQuiz() {
     }, 1000);
   }
 }
+
+//These functions set up the next question in the question array below, and create the buttons needed for the answers. They also reset the classes when the next question is shown in order to prevent any bugs with the code.
 
 function setNextQuestion() {
   resetState();
@@ -127,6 +122,8 @@ function resetState() {
   }
 }
 
+//This function is for when an answer is selected. What it does is load up the next question at random. If there are no more questions in the Array, it goes to the endgame which stores the user's initials and high score in the local storage. My goal was to have these high scores and initals be added to a list in the high score screen, but I was unable to get it to work properly and I had run out of time. If the high score button is clicked before clicking retry, it'll show the score and initials of the last user, but it will disappear off of the HTML after the quiz has been started again. Although it will still be visible in the Application area of the dev tools.
+
 function selectAnswer(e) {
   const selectedButton = e.target;
   const correct = selectedButton.dataset.correct;
@@ -137,34 +134,28 @@ function selectAnswer(e) {
   } else {
     var final = score * secondsLeft;
     showForm();
-    // startButton.innerText = "Retry";
-    // startButton.classList.remove("hide");
     clearInterval(timerInterval);
     recordButton.addEventListener("click",function(event){
       event.preventDefault();
     
-     var temp_data = JSON.parse(localStorage.getItem("user")) || [];
-      console.log(temp_data);
+      console.log(score)
       var user = {initial: initialInput.value, score: final};
-      // temp_data.push(user);
       highScores.push(user);
-    
-      // if (user.initialInput ===""){
-      //   displayMessage("error", "Please enter your initals");
-      // }else{
-      //   displayMessage("Success! Your score has been added!");
-    
+      
         console.log(user);
         localStorage.setItem("user", JSON.stringify(user));
     
-       var lastUser = JSON.parse(localStorage.getItem("user"));
-       console.log(lastUser);
+        var lastUser = localStorage.getItem("user")
+        console.log("last item: ", JSON.parse(lastUser))
+
           initialInputSpan.innerHTML = lastUser;
-      }
+          console.log(localStorage.getItem("user"))
     });
     alert("The quiz is complete. Your final score is: " + final + ". Please enter your initials to keep track of your score!");
   }
 }
+
+//This function will determine if the button clicked during the quiz is the right or wrong answer. If the correct answer is selected, one point is awarded. If an incorrect answer is selected, no points are awarded and five seconds are removed from the timer. 
 
 function setStatusClass(answerBoolean) {
   console.log("------------------------------------");
@@ -180,6 +171,8 @@ function setStatusClass(answerBoolean) {
     secondsLeft -= 5;
   }
 }
+
+//This is the question array. This has the questions that will be randomly displayed to the user along with their answer choices.
 
 const question = [
   {

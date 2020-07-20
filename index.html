@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>JavaScript Quiz</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
     <button id="top">High Scores</button>
     <div id="counter"></div>
-    
+<!-- Here is the container that will hold all of the questions and answers. There are no buttons at the moment. They will be created as needed in JavaScript.
+-->
     <div class="container">
     <h1>The Javascript Multiple Choice Quiz!</h1>
     <div id="question-container" class ="hide">
@@ -17,10 +19,16 @@
     <div id="answer-buttons" class="btn-list">
     </div>
 </div>
+
+<!--These buttons are shown and hidden as needed. One of them begins the quiz itself, the other one will show the next question.-->
+
     <div class="controls">
         <button id="start" class="start btn">Start</button>
         <button id="next" class="next btn hide">Next</button>
     </div>
+
+ <!-- Once the quiz is over, the user will have a chance to enter their initials and record their high score in the local storage. This form allows for that to happen.-->  
+
     <div id="form" class="track hide">
         <form method = "POST">
             <div class="input-group">
@@ -30,9 +38,15 @@
             <div id="msg"></div>
             <button id="record" class = "btn">Submit</button>
         </form>
+            <button id="retry" class ="btn">Retry</button>
     </div>
+
+<!--These are the high scores that will be shown upon the click of the high scores button.-->    
+
+
     <div class="scores hide">
         <h1>High Scores</h1>
+        <ul id="recent"></ul>
         <p><span id = "user-initials"></span></p>
         <button id="return" class="btn">Return</button>
     </div>
