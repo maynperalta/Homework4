@@ -1,4 +1,4 @@
-// Here are my constants and variables that will be needed for the assignment. 
+// variables for HTML elements. 
 
 const startButton = document.getElementById("start");
 const nextButton = document.getElementById("next");
@@ -23,13 +23,13 @@ var secondsLeft = 60;
 var highScores = [];
 
 
-//This function is in reference to a return button in the High Score page. Clicking this button will refresh the page. 
+// function to reload the page from high score. 
 
 returnEl.addEventListener("click", function() {
   location.reload();
 })
 
-//This function shows the initial input form which is then saved to local storage. There's also a retry button which will reset the page to try again.
+// Displays form to save high score initials
 function showForm () {
   formEl.classList.remove("hide");
 }
@@ -38,14 +38,14 @@ retryEl.addEventListener("click", function(){
   location.reload();
 })
 
-//This event listener will show the high scores once the button is clicked it does so by hiding eveything else on the page then showing the high score list. 
+// Show high score user. 
 
 topEl.addEventListener("click", function(){
   questionContainerElement.classList.add("hide");
   hiScore.classList.remove("hide");
 })
 
-//This event listener starts the quiz. It will initiate the startQuiz function and bring up the first question.
+// Function to start quiz upon clicking of start button
 
 startButton.addEventListener("click", startQuiz);
 nextButton.addEventListener("click", () => {
@@ -54,7 +54,7 @@ nextButton.addEventListener("click", () => {
 });
 
 
-//This is the startQuiz function. Here is a series of alerts that will lay out the rules of the quiz. After the alerts have finished, the quiz will begin and the timer will start.
+// Alerts upon starting quiz
 function startQuiz() {
   score = 0;
   secondsLeft = 60;
@@ -70,7 +70,7 @@ function startQuiz() {
     alert("Are you ready? Here we go!");
   }
 
-//The questions are presented in a random order as seen by this code here. This is also where the call for the timer function and the call for the setNextQuestion functions are.
+// Code to randomly select next question.
 
   startButton.classList.add("hide");
   shuffledQuestions = question.sort(() => Math.random() - 0.5);
@@ -80,7 +80,7 @@ function startQuiz() {
   setNextQuestion();
   timer();
 
-//This is a 60 second timer which starts counting down once the quiz begins. If time expires, the quiz is over and the page resets.
+// Timer function.
 
   var timeEl = document.getElementById("counter");
   function timer() {
@@ -96,7 +96,7 @@ function startQuiz() {
   }
 }
 
-//These functions set up the next question in the question array below, and create the buttons needed for the answers. They also reset the classes when the next question is shown in order to prevent any bugs with the code.
+//Function to display next question and generate buttons for answers.
 
 function setNextQuestion() {
   resetState();
@@ -122,7 +122,7 @@ function resetState() {
   }
 }
 
-//This function is for when an answer is selected. What it does is load up the next question at random. If there are no more questions in the Array, it goes to the endgame which stores the user's initials and high score in the local storage. My goal was to have these high scores and initals be added to a list in the high score screen, but I was unable to get it to work properly and I had run out of time. If the high score button is clicked before clicking retry, it'll show the score and initials of the last user, but it will disappear off of the HTML after the quiz has been started again. Although it will still be visible in the Application area of the dev tools.
+//Function to display next question button, or final score once quiz has been completed.
 
 function selectAnswer(e) {
   const selectedButton = e.target;
@@ -155,7 +155,7 @@ function selectAnswer(e) {
   }
 }
 
-//This function will determine if the button clicked during the quiz is the right or wrong answer. If the correct answer is selected, one point is awarded. If an incorrect answer is selected, no points are awarded and five seconds are removed from the timer. 
+// Event listeners for answer buttons to display if answer is correct or incorrect
 
 function setStatusClass(answerBoolean) {
   console.log("------------------------------------");
@@ -172,7 +172,7 @@ function setStatusClass(answerBoolean) {
   }
 }
 
-//This is the question array. This has the questions that will be randomly displayed to the user along with their answer choices.
+//Question array
 
 const question = [
   {

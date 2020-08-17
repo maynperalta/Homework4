@@ -10,8 +10,8 @@
 <body>
     <button id="top">High Scores</button>
     <div id="counter"></div>
-<!-- Here is the container that will hold all of the questions and answers. There are no buttons at the moment. They will be created as needed in JavaScript.
--->
+<!--Container to hold JavaScript generated content.-->
+
     <div class="container">
     <h1>The Javascript Multiple Choice Quiz!</h1>
     <div id="question-container" class ="hide">
@@ -20,14 +20,14 @@
     </div>
 </div>
 
-<!--These buttons are shown and hidden as needed. One of them begins the quiz itself, the other one will show the next question.-->
+<!--Start quiz and next question buttons.-->
 
     <div class="controls">
         <button id="start" class="start btn">Start</button>
         <button id="next" class="next btn hide">Next</button>
     </div>
 
- <!-- Once the quiz is over, the user will have a chance to enter their initials and record their high score in the local storage. This form allows for that to happen.-->  
+ <!-- Initial input upon completion of quiz-->  
 
     <div id="form" class="track hide">
         <form method = "POST">
@@ -41,7 +41,7 @@
             <button id="retry" class ="btn">Retry</button>
     </div>
 
-<!--These are the high scores that will be shown upon the click of the high scores button.-->    
+<!--High Score data-->    
 
 
     <div class="scores hide">
