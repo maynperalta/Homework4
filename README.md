@@ -19,7 +19,7 @@ Screenshot of quiz question
 
 ![](Assets/Quiz.gif)
 <br/>
-Gif demonstration app functionality
+Gif demonstrating app functionality
 
 <br/>
 
